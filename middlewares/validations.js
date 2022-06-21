@@ -82,15 +82,14 @@ const validateWatchedAt = (req, res, next) => {
     return res.status(400).json({ message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"' });
   }
 
-  console.log('watchedAt', watchedAt);
-
   next();
 };
 
 const validateRate = (req, res, next) => {
   const { talk: { rate } } = req.body;
-  console.log('rate', rate);
-  if (!rate) {
+  if (!rate && rate !== 0) {
+    console.log(rate);
+
     return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
   }
 
