@@ -1,6 +1,36 @@
 const router = require('express').Router();
-const { readFile } = require('../helpers/readWriteFile');
+const { readFile, writeFile } = require('../helpers/readWriteFile');
+const { isValidToken,
+  isNameValid,
+  isAgeValid,
+  validTalker,
+  validateWatchedAt,
+  validateRate } = require('../middlewares/validations');
 
+router.post('/',
+    isValidToken,
+    isNameValid,
+    isAgeValid,
+    validTalker,
+    validateWatchedAt,
+    validateRate,
+    async (req, res) => {
+        const { name, age, talk: { watchedAt, rate } } = req.body;
+        const data = await readFile();
+        const newTalker = {
+            id: data.length + 1,
+            name,
+            age,
+            talk: {
+                watchedAt,
+                rate,
+            },
+        };
+        data.push(newTalker);
+        await writeFile(data);
+        return res.status(201).json(newTalker);
+});
+    
 router.get('/', async (_req, res) => {
     const data = await readFile();
     if (data.length === 0) {
