@@ -88,8 +88,6 @@ const validateWatchedAt = (req, res, next) => {
 const validateRate = (req, res, next) => {
   const { talk: { rate } } = req.body;
   if (!rate && rate !== 0) {
-    console.log(rate);
-
     return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
   }
 

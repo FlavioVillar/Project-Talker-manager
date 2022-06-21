@@ -21,5 +21,3 @@ app.get('/', (_request, response) => {
 app.listen(PORT, () => {
   console.log('Online');
 });
-
-// localhost:3000/talker

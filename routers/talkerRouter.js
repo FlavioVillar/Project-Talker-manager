@@ -17,6 +17,14 @@ router.get('/', async (_req, res) => {
     }
 });
 
+// requisito 8
+router.get('/search', isValidToken, async (req, res) => {
+    const { q } = req.query;
+    const data = await readFile();
+    const talkers = data.filter((item) => item.name.toLowerCase().includes(q.toLowerCase()));
+    return res.status(200).json(talkers);
+});
+
 // requisito 2
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
